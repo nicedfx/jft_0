@@ -25,7 +25,7 @@ public class ContactCreationTests {
     @Test
     public void testContactCreationTests() throws Exception {
         goToAddNewContactPage();
-        setFisrtName(new ContactData("ThisIsFirstName", "ThisIsMiddleName", "ThisIsLastName",
+        fillContactCreationForm(new ContactData("ThisIsFirstName", "ThisIsMiddleName", "ThisIsLastName",
                 "ThisIsAddress", "ThisIsHomePhone", "ThisIsMobilePhone", "thisIs@email.com"));
         createContact();
         goToHomePage();
@@ -44,7 +44,7 @@ public class ContactCreationTests {
         driver.findElement(By.xpath("//div[@id='content']/form/input[21]")).click();
     }
 
-    private void setFisrtName(ContactData cintactData) {
+    private void fillContactCreationForm(ContactData cintactData) {
         driver.findElement(By.name("firstname")).clear();
         driver.findElement(By.name("firstname")).sendKeys(cintactData.getFirstName());
         driver.findElement(By.name("middlename")).clear();
