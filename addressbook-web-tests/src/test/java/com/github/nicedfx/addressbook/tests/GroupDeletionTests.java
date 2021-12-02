@@ -1,4 +1,4 @@
-package com.github.nicedfx.addressbook;
+package com.github.nicedfx.addressbook.tests;
 
 import org.testng.annotations.*;
 
@@ -6,10 +6,10 @@ public class GroupDeletionTests extends TestBase {
 
   @Test
   public void testGroupDeletionTests() throws Exception {
-    gotoGroupsPage();
-    selectGroup();
-    deleteSelectedGroups();
-    gotoGroupsPage();
+    app.gotoGroupsPage();
+    app.selectGroup();
+    app.deleteSelectedGroups();
+    app.gotoGroupsPage();
   }
 
 }

@@ -1,4 +1,4 @@
-package com.github.nicedfx.addressbook;
+package com.github.nicedfx.addressbook.model;
 
 public class ContactData {
     private final String firstName;
