@@ -20,4 +20,14 @@ public class NavigationHelper extends HelperBase {
     public void goToAddNewContactPage() {
         click(By.linkText("add new"));
     }
+
+
+
+    public void initContactModification() {
+        click(By.xpath("//img[@alt='Edit']"));
+    }
+
+    public void acceptAlertPopup() {
+        wd.switchTo().alert().accept();
+    }
 }
