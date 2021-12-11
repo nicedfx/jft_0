@@ -15,7 +15,7 @@ public class ApplicationManager {
     private GroupHelper groupHelper;
     private SessionHelper sessionHelper;
     private ContactsHelper contactsHelper;
-    private Browser browser;
+    private final Browser browser;
 
     public ApplicationManager(Browser browser) {
         this.browser = browser;
@@ -24,12 +24,12 @@ public class ApplicationManager {
     public void init() {
         if (browser.equals(Browser.FIREFOX)) {
             wd = new FirefoxDriver();
-        } else if (browser == Browser.CHROME) {
+        } else if (browser.equals(Browser.CHROME)) {
             wd = new ChromeDriver();
-        } else if (browser == Browser.EDGE){
+        } else if (browser.equals(Browser.EDGE)){
             wd = new EdgeDriver();
         }
-        wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         wd.get("http://localhost/addressbook/edit.php");
         groupHelper = new GroupHelper(wd);
         navigationHelper = new NavigationHelper(wd);
