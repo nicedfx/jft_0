@@ -1,6 +1,7 @@
 package com.github.nicedfx.addressbook.tests;
 
 import com.github.nicedfx.addressbook.model.GroupData;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class GroupDeletionTests extends TestBase {
@@ -11,9 +12,16 @@ public class GroupDeletionTests extends TestBase {
         if (!app.getGroupHelper().isThereAGroup()) {
             app.getGroupHelper().createGroup(new GroupData("test1", "test2", "test3"));
         }
-        app.getGroupHelper().selectGroup();
+
+        int before = app.getGroupHelper().getGroupsAmount();
+
+        app.getGroupHelper().selectGroup(before - 1);
         app.getGroupHelper().deleteSelectedGroups();
         app.getNavigationHelper().gotoGroupsPage();
+
+        int after = app.getGroupHelper().getGroupsAmount();
+
+        Assert.assertEquals(after, before - 1);
     }
 
 }

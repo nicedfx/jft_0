@@ -27,7 +27,7 @@ public class ApplicationManager {
             wd = new EdgeDriver();
         }
 //        wd.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        wd.get("http://localhost/addressbook/edit.php");
+        wd.get("http://localhost/addressbook");
         groupHelper = new GroupHelper(wd);
         navigationHelper = new NavigationHelper(wd);
         sessionHelper = new SessionHelper(wd);
