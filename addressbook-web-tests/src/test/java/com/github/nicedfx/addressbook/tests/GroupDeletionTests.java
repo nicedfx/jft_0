@@ -5,15 +5,15 @@ import org.testng.annotations.Test;
 
 public class GroupDeletionTests extends TestBase {
 
-  @Test
-  public void testGroupDeletionTests() throws Exception {
-    app.getNavigationHelper().gotoGroupsPage();
-    if (!app.getGroupHelper().isThereAGroup()) {
-      app.getGroupHelper().createGroup(new GroupData("test1", "test2", "test3"));
+    @Test
+    public void testGroupDeletionTests() throws Exception {
+        app.getNavigationHelper().gotoGroupsPage();
+        if (!app.getGroupHelper().isThereAGroup()) {
+            app.getGroupHelper().createGroup(new GroupData("test1", "test2", "test3"));
+        }
+        app.getGroupHelper().selectGroup();
+        app.getGroupHelper().deleteSelectedGroups();
+        app.getNavigationHelper().gotoGroupsPage();
     }
-    app.getGroupHelper().selectGroup();
-    app.getGroupHelper().deleteSelectedGroups();
-    app.getNavigationHelper().gotoGroupsPage();
-  }
 
 }

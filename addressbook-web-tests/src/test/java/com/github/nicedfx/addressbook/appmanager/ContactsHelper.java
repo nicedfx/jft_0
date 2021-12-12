@@ -3,8 +3,11 @@ package com.github.nicedfx.addressbook.appmanager;
 import com.github.nicedfx.addressbook.model.ContactData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
+
+import java.util.List;
 
 public class ContactsHelper extends HelperBase {
 
@@ -12,7 +15,7 @@ public class ContactsHelper extends HelperBase {
         super(wd);
     }
 
-    public void createContact() {
+    public void finishContactCreation() {
         wd.findElement(By.xpath("//div[@id='content']/form/input[21]")).click();
     }
 
@@ -26,7 +29,11 @@ public class ContactsHelper extends HelperBase {
         type(By.name("email"), contactData.getEmail());
 
         if (isContactCreation) {
-            new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+            if (isGroupPresentInTheList(contactData.getGroup())) {
+                new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+            } else {
+                new Select(wd.findElement(By.name("new_group"))).selectByVisibleText("[none]");
+            }
         } else {
             Assert.assertFalse(isElementPresent(By.name("new_group")));
         }
@@ -44,4 +51,23 @@ public class ContactsHelper extends HelperBase {
         click(By.xpath("//input[@value='Delete']"));
     }
 
+    public boolean isThereAContact() {
+        return isElementPresent(By.name("selected[]"));
+    }
+
+    public void createContact(ContactData contactData, boolean isContactCreation) {
+        fillContactCreationForm(contactData, isContactCreation);
+        finishContactCreation();
+    }
+
+    public boolean isGroupPresentInTheList(String groupName) {
+        boolean result = false;
+        List<WebElement> elements = wd.findElement(By.name("new_group")).findElements(By.tagName("option"));
+        for (WebElement elt : elements) {
+            if (elt.getText().equals(groupName)) {
+                result = true;
+            }
+        }
+        return result;
+    }
 }
