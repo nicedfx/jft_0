@@ -70,4 +70,8 @@ public class ContactsHelper extends HelperBase {
         }
         return result;
     }
+
+    public int getContactsAmount() {
+        return wd.findElements(By.name("selected[]")).size();
+    }
 }
