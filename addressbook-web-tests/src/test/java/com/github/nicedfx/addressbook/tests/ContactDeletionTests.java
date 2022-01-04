@@ -19,7 +19,7 @@ public class ContactDeletionTests extends TestBase {
                     "thisIs@email.com", "test1"));
             app.getNavigationHelper().goToHomePage();
         }
-        app.getContactsHelper().selectContact();
+        app.getContactsHelper().selectContact(before - 1);
         app.getContactsHelper().clickDeleteContactButton();
         app.getNavigationHelper().acceptAlertPopup();
         app.getNavigationHelper().goToHomePage();

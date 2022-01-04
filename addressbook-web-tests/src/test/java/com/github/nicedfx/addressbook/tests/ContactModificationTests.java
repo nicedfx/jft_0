@@ -19,7 +19,7 @@ public class ContactModificationTests extends TestBase {
                     "thisIs@email.com", "test1"));
             app.getNavigationHelper().goToHomePage();
         }
-        app.getContactsHelper().selectContact();
+        app.getContactsHelper().selectContact(0);
         app.getNavigationHelper().initContactModification();
         app.getContactsHelper().fillContactCreationForm(new ContactData("Edited Name", "Edited MiddleName",
                 "Edited LastName", "Edited address", "Edited HomePhone", "Edited mobilePhone",

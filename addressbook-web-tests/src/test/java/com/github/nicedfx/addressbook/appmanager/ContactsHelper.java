@@ -43,8 +43,8 @@ public class ContactsHelper extends HelperBase {
         click(By.name("update"));
     }
 
-    public void selectContact() {
-        click(By.name("selected[]"));
+    public void selectContact(int i) {
+        wd.findElements(By.name("selected[]")).get(i).click();
     }
 
     public void clickDeleteContactButton() {
