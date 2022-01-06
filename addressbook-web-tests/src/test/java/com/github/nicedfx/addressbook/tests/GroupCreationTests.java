@@ -23,7 +23,6 @@ public class GroupCreationTests extends TestBase {
 
         Assert.assertEquals(after.size(), before.size() + 1);
 
-        group.setId(before.stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId() +1);
         before.add(group);
 
         Comparator<GroupData> byId = Comparator.comparingInt(GroupData::getId);
@@ -31,7 +30,7 @@ public class GroupCreationTests extends TestBase {
         before.sort(byId);
         after.sort(byId);
 
-        Assert.assertEquals(new HashSet<>(after), new HashSet<>(before));
+        Assert.assertEquals(after, before);
 
     }
 

@@ -1,6 +1,7 @@
 package com.github.nicedfx.addressbook.appmanager;
 
 import com.github.nicedfx.addressbook.model.ContactData;
+import org.checkerframework.checker.units.qual.C;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -80,11 +81,14 @@ public class ContactsHelper extends HelperBase {
         List<ContactData> contacts = new ArrayList<>();
         List<WebElement> elements = wd.findElements(By.name("entry"));
 
-//        for (WebElement element: elements) {
-//            ContactData contactData = new ContactData(element.)
-//        }
-
-
+        for (WebElement element : elements) {
+            int id = Integer.parseInt(element.findElements(By.tagName("td")).get(0)
+                    .findElement(By.tagName("input")).getAttribute("id"));
+            String lastName = element.findElements(By.tagName("td")).get(1).getText();
+            String firstName = element.findElements(By.tagName("td")).get(2).getText();
+            contacts.add(new ContactData(id, firstName, null,
+                    lastName, null, null, null, null, null));
+        }
         return contacts;
     }
 }
