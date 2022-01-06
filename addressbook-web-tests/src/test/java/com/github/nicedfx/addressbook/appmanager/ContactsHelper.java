@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ContactsHelper extends HelperBase {
@@ -73,5 +74,17 @@ public class ContactsHelper extends HelperBase {
 
     public int getContactsAmount() {
         return wd.findElements(By.name("selected[]")).size();
+    }
+
+    public List<ContactData> getContactsList() {
+        List<ContactData> contacts = new ArrayList<>();
+        List<WebElement> elements = wd.findElements(By.name("entry"));
+
+//        for (WebElement element: elements) {
+//            ContactData contactData = new ContactData(element.)
+//        }
+
+
+        return contacts;
     }
 }

@@ -9,9 +9,6 @@ public class ContactModificationTests extends TestBase {
     @Test
     public void testContactModification() {
         app.getNavigationHelper().goToHomePage();
-
-        int before = app.getContactsHelper().getContactsAmount();
-
         if (!app.getContactsHelper().isThereAContact()) {
             app.getNavigationHelper().goToAddNewContactPage();
             app.getContactsHelper().createContact(new ContactData("ThisIsFirstName", "ThisIsMiddleName",
@@ -19,6 +16,9 @@ public class ContactModificationTests extends TestBase {
                     "thisIs@email.com", "test1"));
             app.getNavigationHelper().goToHomePage();
         }
+
+        int before = app.getContactsHelper().getContactsAmount();
+
         app.getContactsHelper().selectContact(0);
         app.getNavigationHelper().initContactModification();
         app.getContactsHelper().fillContactCreationForm(new ContactData("Edited Name", "Edited MiddleName",
