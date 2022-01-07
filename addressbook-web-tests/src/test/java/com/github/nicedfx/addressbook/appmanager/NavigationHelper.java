@@ -2,7 +2,6 @@ package com.github.nicedfx.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 
 public class NavigationHelper extends HelperBase {
 
@@ -17,7 +16,7 @@ public class NavigationHelper extends HelperBase {
         click(By.linkText("home"));
     }
 
-    public void gotoGroupsPage() {
+    public void groupPage() {
         if (isElementPresent(By.tagName("h1")) && wd.findElement(By.tagName("h1")).getText().equals("groups")
                 && isElementPresent(By.name("new"))) {
             return;

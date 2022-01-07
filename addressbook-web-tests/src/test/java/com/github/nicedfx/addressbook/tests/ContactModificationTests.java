@@ -10,18 +10,18 @@ public class ContactModificationTests extends TestBase {
 
     @Test
     public void testContactModification() {
-        app.getNavigationHelper().goToHomePage();
+        app.goTo().goToHomePage();
         if (!app.getContactsHelper().isThereAContact()) {
-            app.getNavigationHelper().goToAddNewContactPage();
+            app.goTo().goToAddNewContactPage();
             app.getContactsHelper().createContact(new ContactData("ThisIsFirstName", "ThisIsMiddleName",
                     "ThisIsLastName", "ThisIsAddress", "ThisIsHomePhone", "ThisIsMobilePhone",
                     "thisIs@email.com", "test1"));
-            app.getNavigationHelper().goToHomePage();
+            app.goTo().goToHomePage();
         }
 
         List<ContactData> before = app.getContactsHelper().getContactsList();
 
-        app.getNavigationHelper().initContactModification(before.size() - 1);
+        app.goTo().initContactModification(before.size() - 1);
 
         String editedName = "Edited Name " + (short) System.currentTimeMillis();
         String editedLastName = "Edited LastName " + (short) System.currentTimeMillis();
@@ -32,7 +32,7 @@ public class ContactModificationTests extends TestBase {
 
         app.getContactsHelper().fillContactCreationForm(modifiedContact, false);
         app.getContactsHelper().submitContactEditForm();
-        app.getNavigationHelper().goToHomePage();
+        app.goTo().goToHomePage();
 
         before.remove(before.size() -1);
         before.add(modifiedContact);

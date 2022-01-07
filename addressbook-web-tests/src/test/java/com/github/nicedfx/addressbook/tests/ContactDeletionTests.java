@@ -10,21 +10,21 @@ public class ContactDeletionTests extends TestBase {
 
     @Test
     public void testContactDeletion() {
-        app.getNavigationHelper().goToHomePage();
+        app.goTo().goToHomePage();
         if (!app.getContactsHelper().isThereAContact()) {
-            app.getNavigationHelper().goToAddNewContactPage();
+            app.goTo().goToAddNewContactPage();
             app.getContactsHelper().createContact(new ContactData("ThisIsFirstName", "ThisIsMiddleName",
                     "ThisIsLastName", "ThisIsAddress", "ThisIsHomePhone", "ThisIsMobilePhone",
                     "thisIs@email.com", "test1"));
-            app.getNavigationHelper().goToHomePage();
+            app.goTo().goToHomePage();
         }
 
         List<ContactData> before = app.getContactsHelper().getContactsList();
 
         app.getContactsHelper().selectContact(before.size() - 1);
         app.getContactsHelper().clickDeleteContactButton();
-        app.getNavigationHelper().acceptAlertPopup();
-        app.getNavigationHelper().goToHomePage();
+        app.goTo().acceptAlertPopup();
+        app.goTo().goToHomePage();
 
         List<ContactData> after = app.getContactsHelper().getContactsList();
 

@@ -11,10 +11,10 @@ public class ContactCreationTests extends TestBase {
 
     @Test
     public void testContactCreationTests() throws Exception {
-        app.getNavigationHelper().goToHomePage();
+        app.goTo().goToHomePage();
 
         List<ContactData> before = app.getContactsHelper().getContactsList();
-        app.getNavigationHelper().goToAddNewContactPage();
+        app.goTo().goToAddNewContactPage();
 
         ContactData contactToCreate = new ContactData("ThisIsFirstName", "ThisIsMiddleName",
                 "ThisIsLastName", "ThisIsAddress", "ThisIsHomePhone", "ThisIsMobilePhone",
@@ -23,7 +23,7 @@ public class ContactCreationTests extends TestBase {
         before.add(contactToCreate);
 
         app.getContactsHelper().createContact(contactToCreate);
-        app.getNavigationHelper().goToHomePage();
+        app.goTo().goToHomePage();
 
         List<ContactData> after = app.getContactsHelper().getContactsList();
 
