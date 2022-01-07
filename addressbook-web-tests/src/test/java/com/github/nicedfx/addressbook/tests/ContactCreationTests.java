@@ -27,8 +27,6 @@ public class ContactCreationTests extends TestBase {
 
         List<ContactData> after = app.getContactsHelper().getContactsList();
 
-        app.getSessionHelper().logout();
-
         Assert.assertEquals(after.size(), before.size());
 
         Comparator<? super ContactData> byId = Comparator.comparingInt(ContactData::getId);
