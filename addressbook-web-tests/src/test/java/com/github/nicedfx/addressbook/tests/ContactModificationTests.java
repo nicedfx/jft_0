@@ -3,6 +3,8 @@ package com.github.nicedfx.addressbook.tests;
 import com.github.nicedfx.addressbook.model.ContactData;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import java.util.Comparator;
+import java.util.List;
 
 public class ContactModificationTests extends TestBase {
 
@@ -17,17 +19,29 @@ public class ContactModificationTests extends TestBase {
             app.getNavigationHelper().goToHomePage();
         }
 
-        int before = app.getContactsHelper().getContactsAmount();
+        List<ContactData> before = app.getContactsHelper().getContactsList();
 
-        app.getContactsHelper().selectContact(0);
-        app.getNavigationHelper().initContactModification();
-        app.getContactsHelper().fillContactCreationForm(new ContactData("Edited Name", "Edited MiddleName",
-                "Edited LastName", "Edited address", "Edited HomePhone", "Edited mobilePhone",
-                "Edited email", null), false);
+        app.getNavigationHelper().initContactModification(before.size() - 1);
+
+        String editedName = "Edited Name " + (short) System.currentTimeMillis();
+        String editedLastName = "Edited LastName " + (short) System.currentTimeMillis();
+
+        ContactData modifiedContact = new ContactData(editedName, "Edited MiddleName",
+                editedLastName, "Edited address", "Edited HomePhone", "Edited mobilePhone",
+                "Edited email", null);
+
+        app.getContactsHelper().fillContactCreationForm(modifiedContact, false);
         app.getContactsHelper().submitContactEditForm();
         app.getNavigationHelper().goToHomePage();
 
-        int after = app.getContactsHelper().getContactsAmount();
+        before.remove(before.size() -1);
+        before.add(modifiedContact);
+
+        List<ContactData> after = app.getContactsHelper().getContactsList();
+
+        Comparator<? super ContactData> byId = Comparator.comparingInt(ContactData::getId);
+        before.sort(byId);
+        after.sort(byId);
 
         Assert.assertEquals(after, before);
     }

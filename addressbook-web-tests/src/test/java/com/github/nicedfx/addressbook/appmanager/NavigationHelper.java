@@ -2,6 +2,7 @@ package com.github.nicedfx.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 public class NavigationHelper extends HelperBase {
 
@@ -29,9 +30,9 @@ public class NavigationHelper extends HelperBase {
         click(By.linkText("add new"));
     }
 
-
-    public void initContactModification() {
-        click(By.xpath("//img[@alt='Edit']"));
+    public void initContactModification(int index) {
+       wd.findElements(By.name("entry")).get(index)
+               .findElement(By.cssSelector("[alt = Edit]")).click();
     }
 
     public void acceptAlertPopup() {
