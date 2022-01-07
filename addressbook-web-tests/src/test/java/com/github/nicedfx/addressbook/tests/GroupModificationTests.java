@@ -34,7 +34,5 @@ public class GroupModificationTests extends TestBase {
         before.sort(byId);
         after.sort(byId);
         Assert.assertEquals(after, before);
-
-//        Assert.assertEquals(new HashSet<>(after), new HashSet<>(before));
     }
 }

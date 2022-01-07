@@ -4,6 +4,8 @@ import com.github.nicedfx.addressbook.model.ContactData;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.util.List;
+
 public class ContactDeletionTests extends TestBase {
 
     @Test
@@ -17,16 +19,20 @@ public class ContactDeletionTests extends TestBase {
             app.getNavigationHelper().goToHomePage();
         }
 
-        int before = app.getContactsHelper().getContactsAmount();
+        List<ContactData> before = app.getContactsHelper().getContactsList();
 
-        app.getContactsHelper().selectContact(before - 1);
+        app.getContactsHelper().selectContact(before.size() - 1);
         app.getContactsHelper().clickDeleteContactButton();
         app.getNavigationHelper().acceptAlertPopup();
         app.getNavigationHelper().goToHomePage();
 
-        int after = app.getContactsHelper().getContactsAmount();
+        List<ContactData> after = app.getContactsHelper().getContactsList();
 
-        Assert.assertEquals(after, before - 1);
+        Assert.assertEquals(after.size(), before.size() - 1);
+
+        before.remove(before.size() - 1);
+
+        Assert.assertEquals(after, before);
 
     }
 }
