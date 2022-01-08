@@ -6,30 +6,30 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.List;
+import java.util.Set;
 
 public class GroupDeletionTests extends TestBase {
 
     @BeforeMethod
     public void ensureConditions() {
         app.goTo().groupPage();
-        if (app.group().list().size() == 0) {
+        if (app.group().all().size() == 0) {
             app.group().create(new GroupData().withName("test1"));
         }
     }
 
     @Test
-    public void testGroupDeletionTests() throws Exception {
-        List<GroupData> before = app.group().list();
-        int index = before.size() - 1;
-
-        app.group().delete(index);
+    public void testGroupDeletionTests() {
+        Set<GroupData> before = app.group().all();
+        GroupData deletedGroup = before.iterator().next();
+        app.group().delete(deletedGroup);
         app.goTo().groupPage();
 
-        List<GroupData> after = app.group().list();
+        Set<GroupData> after = app.group().all();
 
-        Assert.assertEquals(after.size(), index);
+        Assert.assertEquals(after.size(), before.size() - 1);
 
-        before.remove(index);
+        before.remove(deletedGroup);
 
         Assert.assertEquals(after, before);
     }
