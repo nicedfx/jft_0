@@ -13,23 +13,35 @@ public class ContactModificationTests extends TestBase {
         app.goTo().goToHomePage();
         if (!app.getContactsHelper().isThereAContact()) {
             app.goTo().goToAddNewContactPage();
-            app.getContactsHelper().createContact(new ContactData("ThisIsFirstName", "ThisIsMiddleName",
-                    "ThisIsLastName", "ThisIsAddress", "ThisIsHomePhone", "ThisIsMobilePhone",
-                    "thisIs@email.com", "test1"));
+            app.getContactsHelper().createContact(new ContactData()
+                    .withFirstName("ThisIsFirstName")
+                    .withMiddleName("ThisIsMiddleName")
+                    .withLastName("ThisIsLastName")
+                    .withAddress("ThisIsAddress")
+                    .withHomePhone("ThisIsHomePhone")
+                    .withMobile("ThisIsMobilePhone")
+                    .withEmail("thisIs@email.com")
+                    .withGroup("test1"));
             app.goTo().goToHomePage();
         }
 
         List<ContactData> before = app.getContactsHelper().getContactsList();
 
-        app.goTo().initContactModification(before.size() - 1);
 
         String editedName = "Edited Name " + (short) System.currentTimeMillis();
         String editedLastName = "Edited LastName " + (short) System.currentTimeMillis();
 
-        ContactData modifiedContact = new ContactData(editedName, "Edited MiddleName",
-                editedLastName, "Edited address", "Edited HomePhone", "Edited mobilePhone",
-                "Edited email", null);
+        ContactData modifiedContact = new ContactData()
+                .withFirstName(editedName)
+                .withMiddleName("Edited MiddleName")
+                .withLastName(editedLastName)
+                .withAddress("Edited address")
+                .withHomePhone("Edited HomePhone")
+                .withMobile("Edited mobilePhone")
+                .withEmail("Edited email")
+                .withGroup(null);
 
+        app.goTo().initContactModification(before.size() - 1);
         app.getContactsHelper().fillContactCreationForm(modifiedContact, false);
         app.getContactsHelper().submitContactEditForm();
         app.goTo().goToHomePage();

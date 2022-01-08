@@ -13,9 +13,15 @@ public class ContactDeletionTests extends TestBase {
         app.goTo().goToHomePage();
         if (!app.getContactsHelper().isThereAContact()) {
             app.goTo().goToAddNewContactPage();
-            app.getContactsHelper().createContact(new ContactData("ThisIsFirstName", "ThisIsMiddleName",
-                    "ThisIsLastName", "ThisIsAddress", "ThisIsHomePhone", "ThisIsMobilePhone",
-                    "thisIs@email.com", "test1"));
+            app.getContactsHelper().createContact(new ContactData()
+                    .withFirstName("ThisIsFirstName")
+                    .withMiddleName("ThisIsMiddleName")
+                    .withLastName("ThisIsLastName")
+                    .withAddress("ThisIsAddress")
+                    .withHomePhone("ThisIsHomePhone")
+                    .withMobile("ThisIsMobilePhone")
+                    .withEmail("thisIs@email.com")
+                    .withGroup("test1"));
             app.goTo().goToHomePage();
         }
 

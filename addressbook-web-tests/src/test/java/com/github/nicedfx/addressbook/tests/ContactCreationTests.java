@@ -16,9 +16,15 @@ public class ContactCreationTests extends TestBase {
         List<ContactData> before = app.getContactsHelper().getContactsList();
         app.goTo().goToAddNewContactPage();
 
-        ContactData contactToCreate = new ContactData("ThisIsFirstName", "ThisIsMiddleName",
-                "ThisIsLastName", "ThisIsAddress", "ThisIsHomePhone", "ThisIsMobilePhone",
-                "thisIs@email.com", "Test_edit1");
+        ContactData contactToCreate = new ContactData()
+                .withFirstName("ThisIsFirstName")
+                .withMiddleName("ThisIsMiddleName")
+                .withLastName("ThisIsLastName")
+                .withAddress("ThisIsAddress")
+                .withHomePhone("ThisIsHomePhone")
+                .withMobile("ThisIsMobilePhone")
+                .withEmail("thisIs@email.com")
+                .withGroup("Test_edit1");
 
         before.add(contactToCreate);
 
