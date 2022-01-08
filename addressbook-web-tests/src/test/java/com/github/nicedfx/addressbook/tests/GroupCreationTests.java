@@ -1,12 +1,14 @@
 package com.github.nicedfx.addressbook.tests;
 
 import com.github.nicedfx.addressbook.model.GroupData;
+import org.hamcrest.MatcherAssert;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.util.Comparator;
-import java.util.List;
 import java.util.Set;
+
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
 
 public class GroupCreationTests extends TestBase {
     @Test
@@ -19,12 +21,12 @@ public class GroupCreationTests extends TestBase {
 
         Set<GroupData> after = app.group().all();
 
-        Assert.assertEquals(after.size(), before.size() + 1);
+        assertThat(after.size(), equalTo(before.size() + 1));
 
         group.withId(after.stream().mapToInt(GroupData::getId).max().getAsInt());
         before.add(group);
 
-        Assert.assertEquals(after, before);
+        assertThat(after, equalTo(before.withAdded(group)));
     }
 
 }
