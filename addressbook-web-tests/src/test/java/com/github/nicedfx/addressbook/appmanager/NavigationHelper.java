@@ -9,7 +9,7 @@ public class NavigationHelper extends HelperBase {
         super(wd);
     }
 
-    public void goToHomePage() {
+    public void homePage() {
         if (isElementPresent(By.id("maintable"))) {
             return;
         }
@@ -25,13 +25,8 @@ public class NavigationHelper extends HelperBase {
         }
     }
 
-    public void goToAddNewContactPage() {
+    public void addNewContactPage() {
         click(By.linkText("add new"));
-    }
-
-    public void initContactModification(int index) {
-       wd.findElements(By.name("entry")).get(index)
-               .findElement(By.cssSelector("[alt = Edit]")).click();
     }
 
     public void acceptAlertPopup() {

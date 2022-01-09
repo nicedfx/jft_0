@@ -1,12 +1,13 @@
 package com.github.nicedfx.addressbook.tests;
 
 import com.github.nicedfx.addressbook.model.GroupData;
-import org.testng.Assert;
+import com.github.nicedfx.addressbook.model.Groups;
+import org.hamcrest.MatcherAssert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.List;
-import java.util.Set;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.testng.Assert.assertEquals;
 
 public class GroupDeletionTests extends TestBase {
 
@@ -20,20 +21,17 @@ public class GroupDeletionTests extends TestBase {
 
     @Test
     public void testGroupDeletionTests() {
-        Set<GroupData> before = app.group().all();
+        Groups before = app.group().all();
         GroupData deletedGroup = before.iterator().next();
         app.group().delete(deletedGroup);
         app.goTo().groupPage();
 
-        Set<GroupData> after = app.group().all();
+        Groups after = app.group().all();
 
-        Assert.assertEquals(after.size(), before.size() - 1);
+        assertEquals(after.size(), before.size() - 1);
 
-        before.remove(deletedGroup);
-
-        Assert.assertEquals(after, before);
+        MatcherAssert.assertThat(after, equalTo(before.without(deletedGroup)));
     }
-
 
 
 }

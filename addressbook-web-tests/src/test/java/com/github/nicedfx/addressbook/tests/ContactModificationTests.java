@@ -1,19 +1,22 @@
 package com.github.nicedfx.addressbook.tests;
 
 import com.github.nicedfx.addressbook.model.ContactData;
-import org.testng.Assert;
+import com.github.nicedfx.addressbook.model.Contacts;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import java.util.Comparator;
-import java.util.List;
+
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
+import static org.testng.Assert.assertEquals;
 
 public class ContactModificationTests extends TestBase {
 
-    @Test
-    public void testContactModification() {
-        app.goTo().goToHomePage();
-        if (!app.getContactsHelper().isThereAContact()) {
-            app.goTo().goToAddNewContactPage();
-            app.getContactsHelper().createContact(new ContactData()
+    @BeforeMethod
+    public void beforeMethod() {
+        app.goTo().homePage();
+        if (!app.contact().isThereAContact()) {
+            app.goTo().addNewContactPage();
+            app.contact().create(new ContactData()
                     .withFirstName("ThisIsFirstName")
                     .withMiddleName("ThisIsMiddleName")
                     .withLastName("ThisIsLastName")
@@ -22,16 +25,22 @@ public class ContactModificationTests extends TestBase {
                     .withMobile("ThisIsMobilePhone")
                     .withEmail("thisIs@email.com")
                     .withGroup("test1"));
-            app.goTo().goToHomePage();
+            app.goTo().homePage();
         }
+    }
 
-        List<ContactData> before = app.getContactsHelper().getContactsList();
+    @Test
+    public void testContactModification() {
 
+        Contacts before = app.contact().all();
+
+        ContactData contactToModify = before.iterator().next();
 
         String editedName = "Edited Name " + (short) System.currentTimeMillis();
         String editedLastName = "Edited LastName " + (short) System.currentTimeMillis();
 
         ContactData modifiedContact = new ContactData()
+                .withId(contactToModify.getId())
                 .withFirstName(editedName)
                 .withMiddleName("Edited MiddleName")
                 .withLastName(editedLastName)
@@ -41,20 +50,16 @@ public class ContactModificationTests extends TestBase {
                 .withEmail("Edited email")
                 .withGroup(null);
 
-        app.goTo().initContactModification(before.size() - 1);
-        app.getContactsHelper().fillContactCreationForm(modifiedContact, false);
-        app.getContactsHelper().submitContactEditForm();
-        app.goTo().goToHomePage();
+        app.contact().initContactModification(contactToModify.getId());
+        app.contact().fillContactCreationForm(modifiedContact, false);
+        app.contact().submitContactEditForm();
+        app.goTo().homePage();
 
-        before.remove(before.size() -1);
-        before.add(modifiedContact);
+        Contacts after = app.contact().all();
 
-        List<ContactData> after = app.getContactsHelper().getContactsList();
+        assertEquals(after.size(), before.size());
 
-        Comparator<? super ContactData> byName = Comparator.comparing(ContactData::getLastName);
-        before.sort(byName);
-        after.sort(byName);
-
-        Assert.assertEquals(after, before);
+        assertThat(after,
+                equalTo(before.without(contactToModify).withAdded(modifiedContact)));
     }
 }

@@ -1,20 +1,21 @@
 package com.github.nicedfx.addressbook.tests;
 
 import com.github.nicedfx.addressbook.model.ContactData;
-import org.testng.Assert;
+import com.github.nicedfx.addressbook.model.Contacts;
 import org.testng.annotations.Test;
 
-import java.util.Comparator;
-import java.util.List;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.Assert.assertEquals;
 
 public class ContactCreationTests extends TestBase {
 
     @Test
     public void testContactCreationTests() throws Exception {
-        app.goTo().goToHomePage();
+        app.goTo().homePage();
 
-        List<ContactData> before = app.getContactsHelper().getContactsList();
-        app.goTo().goToAddNewContactPage();
+        Contacts before = app.contact().all();
+        app.goTo().addNewContactPage();
 
         ContactData contactToCreate = new ContactData()
                 .withFirstName("ThisIsFirstName")
@@ -26,20 +27,16 @@ public class ContactCreationTests extends TestBase {
                 .withEmail("thisIs@email.com")
                 .withGroup("Test_edit1");
 
-        before.add(contactToCreate);
+        app.contact().create(contactToCreate);
+        app.goTo().homePage();
 
-        app.getContactsHelper().createContact(contactToCreate);
-        app.goTo().goToHomePage();
+        Contacts after = app.contact().all();
 
-        List<ContactData> after = app.getContactsHelper().getContactsList();
+        assertEquals(after.size(), before.size() + 1);
 
-        Assert.assertEquals(after.size(), before.size());
-
-        Comparator<? super ContactData> byName = Comparator.comparing(ContactData::getLastName);
-        before.sort(byName);
-        after.sort(byName);
-
-        Assert.assertEquals(after, before);
+        assertThat(after, equalTo(
+                before.withAdded(contactToCreate.withId(after.stream().mapToInt(ContactData::getId).max().getAsInt()
+                ))));
     }
 
 }

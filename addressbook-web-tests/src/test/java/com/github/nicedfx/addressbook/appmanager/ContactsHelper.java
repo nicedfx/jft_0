@@ -1,13 +1,13 @@
 package com.github.nicedfx.addressbook.appmanager;
 
 import com.github.nicedfx.addressbook.model.ContactData;
+import com.github.nicedfx.addressbook.model.Contacts;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ContactsHelper extends HelperBase {
@@ -44,8 +44,8 @@ public class ContactsHelper extends HelperBase {
         click(By.name("update"));
     }
 
-    public void selectContact(int i) {
-        wd.findElements(By.name("selected[]")).get(i).click();
+    public void selectContact(int id) {
+        wd.findElement(By.cssSelector("input[id='" + id + "']")).click();
     }
 
     public void clickDeleteContactButton() {
@@ -56,7 +56,7 @@ public class ContactsHelper extends HelperBase {
         return isElementPresent(By.name("selected[]"));
     }
 
-    public void createContact(ContactData contactData) {
+    public void create(ContactData contactData) {
         fillContactCreationForm(contactData, true);
         finishContactCreation();
     }
@@ -76,8 +76,14 @@ public class ContactsHelper extends HelperBase {
         return wd.findElements(By.name("selected[]")).size();
     }
 
-    public List<ContactData> getContactsList() {
-        List<ContactData> contacts = new ArrayList<>();
+    public void initContactModification(int id) {
+        wd.findElement(By.xpath("//*[@id=\"" + id + "\"]/../.."))
+                .findElement(By.cssSelector("img[alt=Edit]"))
+                .click();
+    }
+
+    public Contacts all() {
+        Contacts contacts = new Contacts();
         List<WebElement> elements = wd.findElements(By.name("entry"));
 
         for (WebElement element : elements) {
