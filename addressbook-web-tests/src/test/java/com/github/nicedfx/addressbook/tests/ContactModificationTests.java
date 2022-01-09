@@ -51,9 +51,9 @@ public class ContactModificationTests extends TestBase {
 
         List<ContactData> after = app.getContactsHelper().getContactsList();
 
-        Comparator<? super ContactData> byId = Comparator.comparingInt(ContactData::getId);
-        before.sort(byId);
-        after.sort(byId);
+        Comparator<? super ContactData> byName = Comparator.comparing(ContactData::getLastName);
+        before.sort(byName);
+        after.sort(byName);
 
         Assert.assertEquals(after, before);
     }
