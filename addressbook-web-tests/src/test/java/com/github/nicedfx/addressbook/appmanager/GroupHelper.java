@@ -10,6 +10,8 @@ import java.util.List;
 
 public class GroupHelper extends HelperBase {
 
+    private Groups groupCash = null;
+
     public GroupHelper(WebDriver wd) {
         super(wd);
     }
@@ -57,6 +59,7 @@ public class GroupHelper extends HelperBase {
         fillGroupForm(groupData);
         submitGroupCreation();
         returnToGroupsPage();
+        groupCash = null;
     }
 
     public void modify(GroupData group) {
@@ -64,11 +67,13 @@ public class GroupHelper extends HelperBase {
         initGroupModification();
         fillGroupForm(group);
         submitGroupModification();
+        groupCash = null;
     }
 
     public void delete(GroupData group) {
         selectGroupById(group.getId());
         deleteSelectedGroups();
+        groupCash = null;
     }
 
     public int getGroupsAmount() {
@@ -76,17 +81,21 @@ public class GroupHelper extends HelperBase {
     }
 
     public Groups all() {
-        Groups groups = new Groups();
+        if (groupCash != null) {
+            return new Groups(groupCash);
+        }
+
+        groupCash = new Groups();
 
         List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
 
         for (WebElement element : elements) {
             String name = element.getText();
             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-            groups.add(new GroupData()
+            groupCash.add(new GroupData()
                     .withId(id)
                     .withName(name));
         }
-        return groups;
+        return new Groups(groupCash);
     }
 }
