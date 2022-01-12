@@ -76,7 +76,7 @@ public class GroupHelper extends HelperBase {
         groupCash = null;
     }
 
-    public int getGroupsAmount() {
+    public int count() {
         return wd.findElements(By.name("selected[]")).size();
     }
 

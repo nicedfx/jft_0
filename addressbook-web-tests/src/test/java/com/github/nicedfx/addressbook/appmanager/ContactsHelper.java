@@ -26,7 +26,8 @@ public class ContactsHelper extends HelperBase {
         type(By.name("lastname"), contactData.getLastName());
         type(By.name("address"), contactData.getAddress());
         type(By.name("home"), contactData.getHomePhone());
-        type(By.name("mobile"), contactData.getMobile());
+        type(By.name("mobile"), contactData.getMobilePhone());
+        type(By.name("work"), contactData.getWorkPhone());
         type(By.name("email"), contactData.getEmail());
 
         if (isContactCreation) {
@@ -76,6 +77,18 @@ public class ContactsHelper extends HelperBase {
         return wd.findElements(By.name("selected[]")).size();
     }
 
+    public ContactData infoFromEditForm(ContactData contact) {
+        initContactModification(contact.getId());
+
+        return new ContactData()
+                .withId(contact.getId())
+                .withFirstName(wd.findElement(By.name("firstname")).getAttribute("value"))
+                .withLastName(wd.findElement(By.name("lastname")).getAttribute("value"))
+                .withHomePhone(wd.findElement(By.name("home")).getAttribute("value"))
+                .withMobilePhone(wd.findElement(By.name("mobile")).getAttribute("value"))
+                .withWorkPhone(wd.findElement(By.name("work")).getAttribute("value"));
+    }
+
     public void initContactModification(int id) {
         wd.findElement(By.xpath("//*[@id=\"" + id + "\"]/../.."))
                 .findElement(By.cssSelector("img[alt=Edit]"))
@@ -87,15 +100,22 @@ public class ContactsHelper extends HelperBase {
         List<WebElement> elements = wd.findElements(By.name("entry"));
 
         for (WebElement element : elements) {
-            int id = Integer.parseInt(element.findElements(By.tagName("td")).get(0)
+            List<WebElement> cells = element.findElements(By.tagName("td"));
+
+            int id = Integer.parseInt(cells.get(0)
                     .findElement(By.tagName("input")).getAttribute("id"));
-            String lastName = element.findElements(By.tagName("td")).get(1).getText();
-            String firstName = element.findElements(By.tagName("td")).get(2).getText();
+            String lastName = cells.get(1).getText();
+            String firstName = cells.get(2).getText();
+
+            String phones = cells.get(5).getText();
             contacts.add(new ContactData()
                     .withId(id)
                     .withFirstName(firstName)
-                    .withLastName(lastName));
+                    .withLastName(lastName)
+                    .withAllPhones(phones));
         }
         return contacts;
     }
+
+
 }

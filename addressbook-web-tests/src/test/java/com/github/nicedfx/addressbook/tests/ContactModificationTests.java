@@ -22,7 +22,7 @@ public class ContactModificationTests extends TestBase {
                     .withLastName("ThisIsLastName")
                     .withAddress("ThisIsAddress")
                     .withHomePhone("ThisIsHomePhone")
-                    .withMobile("ThisIsMobilePhone")
+                    .withMobilePhone("ThisIsMobilePhone")
                     .withEmail("thisIs@email.com")
                     .withGroup("test1"));
             app.goTo().homePage();
@@ -46,7 +46,7 @@ public class ContactModificationTests extends TestBase {
                 .withLastName(editedLastName)
                 .withAddress("Edited address")
                 .withHomePhone("Edited HomePhone")
-                .withMobile("Edited mobilePhone")
+                .withMobilePhone("Edited mobilePhone")
                 .withEmail("Edited email")
                 .withGroup(null);
 
@@ -55,9 +55,9 @@ public class ContactModificationTests extends TestBase {
         app.contact().submitContactEditForm();
         app.goTo().homePage();
 
-        Contacts after = app.contact().all();
+        assertEquals(app.group().count(), before.size());
 
-        assertEquals(after.size(), before.size());
+        Contacts after = app.contact().all();
 
         assertThat(after,
                 equalTo(before.without(contactToModify).withAdded(modifiedContact)));
