@@ -17,7 +17,7 @@ public class ContactInformationTests extends TestBase {
         return phone.replaceAll("\\s", "").replaceAll("[-()]", "");
     }
 
-    public static String cleanedAddresses(String address) {
+    public static String normalizeSpaces(String address) {
         String[] addressLines = address.split("\n");
 
         for (int i = 0; i < addressLines.length; i++) {
@@ -40,6 +40,7 @@ public class ContactInformationTests extends TestBase {
                     .withHomePhone("+7 (921) 2205077")
                     .withMobilePhone("557-89-21")
                     .withWorkPhone("8 800 111 22  33")
+                    .withSecondPhone("8888     8888")
                     .withEmail("thisIs@email.co   m")
                     .withEmail2("thisIs@email.com    ")
                     .withEmail3("   thisIs@email.com")
@@ -55,13 +56,13 @@ public class ContactInformationTests extends TestBase {
         ContactData contactInfoFromEditForm = app.contact().infoFromEditForm(contact);
 
         assertThat(contact.getAllPhones(), equalTo(mergePhones(contactInfoFromEditForm)));
-        assertThat(contact.getAddress(), equalTo(cleanedAddresses(contactInfoFromEditForm.getAddress())));
+        assertThat(contact.getAddress(), equalTo(normalizeSpaces(contactInfoFromEditForm.getAddress())));
         assertThat(contact.getEmails(), equalTo(mergeEmails(contactInfoFromEditForm)));
 
     }
 
     private String mergePhones(ContactData contact) {
-        return Stream.of(contact.getHomePhone(), contact.getMobilePhone(), contact.getWorkPhone())
+        return Stream.of(contact.getHomePhone(), contact.getMobilePhone(), contact.getWorkPhone(), contact.getSecondPhone())
                 .filter(v -> !v.equals(""))
                 .map(ContactInformationTests::cleanedPhones)
                 .collect(Collectors.joining("\n"));
@@ -70,7 +71,7 @@ public class ContactInformationTests extends TestBase {
     private String mergeEmails(ContactData contact) {
         return Stream.of(contact.getEmail(), contact.getEmail2(), contact.getEmail3())
                 .filter(v -> !v.equals(""))
-                .map(ContactInformationTests::cleanedAddresses)
+                .map(ContactInformationTests::normalizeSpaces)
                 .collect(Collectors.joining("\n"));
     }
 }

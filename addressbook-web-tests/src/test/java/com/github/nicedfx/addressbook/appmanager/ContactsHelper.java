@@ -28,6 +28,7 @@ public class ContactsHelper extends HelperBase {
         type(By.name("home"), contactData.getHomePhone());
         type(By.name("mobile"), contactData.getMobilePhone());
         type(By.name("work"), contactData.getWorkPhone());
+        type(By.name("phone2"), contactData.getSecondPhone());
         type(By.name("email"), contactData.getEmail());
         type(By.name("email2"), contactData.getEmail2());
         type(By.name("email3"), contactData.getEmail3());
@@ -89,6 +90,7 @@ public class ContactsHelper extends HelperBase {
                 .withHomePhone(wd.findElement(By.name("home")).getAttribute("value"))
                 .withMobilePhone(wd.findElement(By.name("mobile")).getAttribute("value"))
                 .withWorkPhone(wd.findElement(By.name("work")).getAttribute("value"))
+                .withSecondPhone(wd.findElement(By.name("phone2")).getAttribute("value"))
                 .withAddress(wd.findElement(By.name("address")).getText())
                 .withEmail(wd.findElement(By.name("email")).getAttribute("value"))
                 .withEmail2(wd.findElement(By.name("email2")).getAttribute("value"))
