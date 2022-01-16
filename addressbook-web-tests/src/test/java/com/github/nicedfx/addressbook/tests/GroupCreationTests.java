@@ -3,7 +3,6 @@ package com.github.nicedfx.addressbook.tests;
 import com.github.nicedfx.addressbook.model.GroupData;
 import com.github.nicedfx.addressbook.model.Groups;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.thoughtworks.xstream.XStream;
 import org.openqa.selenium.json.TypeToken;
 import org.testng.annotations.DataProvider;

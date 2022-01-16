@@ -8,10 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.thoughtworks.xstream.XStream;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +24,9 @@ public class GroupDataGenerator {
         GroupDataGenerator generator = new GroupDataGenerator();
         JCommander commander = new JCommander(generator);
         try {
+            if (args.length == 0) {
+                throw new ParameterException("No parameters provided");
+            }
             commander.parse( args);
         } catch (ParameterException e) {
             commander.usage();
