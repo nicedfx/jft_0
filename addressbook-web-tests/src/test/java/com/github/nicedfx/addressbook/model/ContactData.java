@@ -1,5 +1,6 @@
 package com.github.nicedfx.addressbook.model;
 
+import java.io.File;
 import java.util.Objects;
 
 public class ContactData {
@@ -18,6 +19,7 @@ public class ContactData {
     private String email3;
     private String emails;
     private String group;
+    private File photo;
 
     public String getFirstName() {
         return firstName;
@@ -77,6 +79,10 @@ public class ContactData {
 
     public int getId() {
         return id;
+    }
+
+    public File getPhoto() {
+        return photo;
     }
 
     public ContactData withId(int id) {
@@ -146,6 +152,11 @@ public class ContactData {
 
     public ContactData withEmails(String emails) {
         this.emails = emails;
+        return this;
+    }
+
+    public ContactData withPhoto(File photo) {
+        this.photo = photo;
         return this;
     }
 

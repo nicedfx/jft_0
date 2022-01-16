@@ -4,6 +4,8 @@ import com.github.nicedfx.addressbook.model.ContactData;
 import com.github.nicedfx.addressbook.model.Contacts;
 import org.testng.annotations.Test;
 
+import java.io.File;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.testng.Assert.assertEquals;
@@ -16,6 +18,7 @@ public class ContactCreationTests extends TestBase {
 
         Contacts before = app.contact().all();
         app.goTo().addNewContactPage();
+        File photo = new File("src/test/resources/pic1.png");
 
         ContactData contactToCreate = new ContactData()
                 .withFirstName("ThisIsFirstName")
@@ -25,7 +28,9 @@ public class ContactCreationTests extends TestBase {
                 .withHomePhone("ThisIsHomePhone")
                 .withMobilePhone("ThisIsMobilePhone")
                 .withEmail("thisIs@email.com")
-                .withGroup("Test_edit1");
+                .withGroup("Test_edit1")
+                .withPhoto(photo);
+
 
         app.contact().create(contactToCreate);
         app.goTo().homePage();
@@ -64,6 +69,17 @@ public class ContactCreationTests extends TestBase {
         Contacts after = app.contact().all();
 
         assertThat(after, equalTo(before));
+    }
+
+    @Test(enabled = false)
+    public void testCurrentDir() {
+        File currentDir = new File(".");
+        System.out.println(currentDir.getAbsolutePath());
+        File photo = new File("src/test/resources/pic1.png");
+        System.out.println(photo.getAbsolutePath());
+
+        System.out.println(photo.exists());
+
     }
 
 }
