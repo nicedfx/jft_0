@@ -8,8 +8,10 @@ import org.openqa.selenium.json.TypeToken;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,11 +31,11 @@ public class GroupCreationTests extends TestBase {
             line = reader.readLine();
         }
         XStream xStream = new XStream();
-        xStream.allowTypes(new Class[] {GroupData.class});
+        xStream.allowTypes(new Class[]{GroupData.class});
         xStream.processAnnotations(GroupData.class);
         List<GroupData> groups = (List<GroupData>) xStream.fromXML(xml);
 
-        return groups.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
+        return groups.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
     }
 
     @DataProvider
@@ -46,8 +48,9 @@ public class GroupCreationTests extends TestBase {
             line = reader.readLine();
         }
         Gson gson = new Gson();
-        List<GroupData> groups = gson.fromJson(json, new TypeToken<List<GroupData>>(){}.getType()); //List<GroupData>.class
-        return groups.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
+        List<GroupData> groups = gson.fromJson(json, new TypeToken<List<GroupData>>() {
+        }.getType()); //List<GroupData>.class
+        return groups.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
     }
 
     @Test(dataProvider = "validGroupsFromJson")
