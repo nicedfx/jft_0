@@ -24,44 +24,5 @@
     "email": "thisIs1@email.co   m",
     "email2": "thisIs1@email.com    ",
     "email3": "   thisIs1@email.com"
-  },
-  {
-    "firstName": "FirstName 2",
-    "middleName": "MiddleName 2",
-    "lastName": "LastName 2",
-    "address": "Address 2",
-    "homePhone": "+7 (921) 2205072",
-    "mobilePhone": "557-89-22",
-    "workPhone": "8 800 111 22  32",
-    "secondPhone": "8888     8882",
-    "email": "thisIs2@email.co   m",
-    "email2": "thisIs2@email.com    ",
-    "email3": "   thisIs2@email.com"
-  },
-  {
-    "firstName": "FirstName 3",
-    "middleName": "MiddleName 3",
-    "lastName": "LastName 3",
-    "address": "Address 3",
-    "homePhone": "+7 (921) 2205073",
-    "mobilePhone": "557-89-23",
-    "workPhone": "8 800 111 22  33",
-    "secondPhone": "8888     8883",
-    "email": "thisIs3@email.co   m",
-    "email2": "thisIs3@email.com    ",
-    "email3": "   thisIs3@email.com"
-  },
-  {
-    "firstName": "FirstName 4",
-    "middleName": "MiddleName 4",
-    "lastName": "LastName 4",
-    "address": "Address 4",
-    "homePhone": "+7 (921) 2205074",
-    "mobilePhone": "557-89-24",
-    "workPhone": "8 800 111 22  34",
-    "secondPhone": "8888     8884",
-    "email": "thisIs4@email.co   m",
-    "email2": "thisIs4@email.com    ",
-    "email3": "   thisIs4@email.com"
   }
 ]

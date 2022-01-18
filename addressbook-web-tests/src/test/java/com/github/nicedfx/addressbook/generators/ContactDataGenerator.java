@@ -31,7 +31,7 @@ public class ContactDataGenerator {
             if (args.length == 0) {
                 throw new ParameterException("No parameters provided");
             }
-            commander.parse( args);
+            commander.parse(args);
         } catch (ParameterException e) {
             commander.usage();
             return;
@@ -41,14 +41,12 @@ public class ContactDataGenerator {
 
     private void run() throws IOException {
         List<ContactData> contacts = generateContacts(count);
-        if ("xml".equals(format)){
+        if ("xml".equals(format)) {
             saveAsXml(contacts, new File(file));
         } else if ("json".equals(format)) {
             saveAsJson(contacts, new File(file));
-        }
-        else {
+        } else {
             System.out.println("Unrecognized format " + format);
-            return;
         }
     }
 
@@ -58,19 +56,18 @@ public class ContactDataGenerator {
                 .excludeFieldsWithoutExposeAnnotation()
                 .create();
         String json = gson.toJson(contacts);
-        Writer writer = new FileWriter(file);
-        writer.write(json);
-        writer.close();
-
+        try (Writer writer = new FileWriter(file)) {
+            writer.write(json);
+        }
     }
 
     private void saveAsXml(List<ContactData> contacts, File file) throws IOException {
         XStream xStream = new XStream();
         xStream.processAnnotations(GroupData.class);
         String xml = xStream.toXML(contacts);
-        Writer writer = new FileWriter(file);
-        writer.write(xml);
-        writer.close();
+        try (Writer writer = new FileWriter(file)) {
+            writer.write(xml);
+        }
     }
 
     private List<ContactData> generateContacts(int count) {
