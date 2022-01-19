@@ -41,6 +41,7 @@ public class ContactCreationTests extends TestBase {
 
     @Test(dataProvider = "contactCreationDataProvider")
     public void testContactCreationTests(ContactData contactToCreate) {
+        logger.info("Start test testContactCreationTests");
         app.goTo().homePage();
 
         Contacts before = app.contact().all();
@@ -57,6 +58,7 @@ public class ContactCreationTests extends TestBase {
         assertThat(after, equalTo(
                 before.withAdded(contactToCreate.withId(after.stream().mapToInt(ContactData::getId).max().getAsInt()
                 ))));
+        logger.info("Start test testContactCreationTests");
     }
 
     @Test
