@@ -14,7 +14,7 @@ public class ContactModificationTests extends TestBase {
     @BeforeMethod
     public void beforeMethod() {
         app.goTo().homePage();
-        if (!app.contact().isThereAContact()) {
+        if (app.db().contacts().size() == 0) {
             app.goTo().addNewContactPage();
             app.contact().create(new ContactData()
                     .withFirstName("ThisIsFirstName")
@@ -32,7 +32,7 @@ public class ContactModificationTests extends TestBase {
     @Test
     public void testContactModification() {
 
-        Contacts before = app.contact().all();
+        Contacts before = app.db().contacts();
 
         ContactData contactToModify = before.iterator().next();
 
@@ -57,7 +57,7 @@ public class ContactModificationTests extends TestBase {
 
         assertEquals(app.group().count(), before.size());
 
-        Contacts after = app.contact().all();
+        Contacts after = app.db().contacts();
 
         assertThat(after,
                 equalTo(before.without(contactToModify).withAdded(modifiedContact)));

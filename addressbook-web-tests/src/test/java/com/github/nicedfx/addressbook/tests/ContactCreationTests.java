@@ -44,14 +44,14 @@ public class ContactCreationTests extends TestBase {
         logger.info("Start test testContactCreationTests");
         app.goTo().homePage();
 
-        Contacts before = app.contact().all();
+        Contacts before = app.db().contacts();
         app.goTo().addNewContactPage();
         File photo = new File("src/test/resources/pic1.png");
 
         app.contact().create(contactToCreate);
         app.goTo().homePage();
 
-        Contacts after = app.contact().all();
+        Contacts after = app.db().contacts();
 
         assertEquals(after.size(), before.size() + 1);
 
@@ -65,7 +65,7 @@ public class ContactCreationTests extends TestBase {
     public void testBadContactCreationTests() {
         app.goTo().homePage();
 
-        Contacts before = app.contact().all();
+        Contacts before = app.db().contacts();
         app.goTo().addNewContactPage();
 
         ContactData contactToCreate = new ContactData()
@@ -83,7 +83,7 @@ public class ContactCreationTests extends TestBase {
 
         assertEquals(app.group().count(), before.size());
 
-        Contacts after = app.contact().all();
+        Contacts after = app.db().contacts();
 
         assertThat(after, equalTo(before));
     }

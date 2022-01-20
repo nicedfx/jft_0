@@ -14,7 +14,7 @@ public class ContactDeletionTests extends TestBase {
     @BeforeMethod
     public void beforeMethod() {
         app.goTo().homePage();
-        if (!app.contact().isThereAContact()) {
+        if (app.db().contacts().size() == 0) {
             app.goTo().addNewContactPage();
             app.contact().create(new ContactData()
                     .withFirstName("ThisIsFirstName")
@@ -31,7 +31,7 @@ public class ContactDeletionTests extends TestBase {
 
     @Test
     public void testContactDeletion() {
-        Contacts before = app.contact().all();
+        Contacts before = app.db().contacts();
 
         ContactData removedContact = before.iterator().next();
 
@@ -40,7 +40,7 @@ public class ContactDeletionTests extends TestBase {
         app.goTo().acceptAlertPopup();
         app.goTo().homePage();
 
-        Contacts after = app.contact().all();
+        Contacts after = app.db().contacts();
 
         assertEquals(after.size(), before.size() - 1);
 
