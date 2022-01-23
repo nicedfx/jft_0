@@ -32,6 +32,8 @@ public class GroupDeletionTests extends TestBase {
 
 
         MatcherAssert.assertThat(after, equalTo(before.without(deletedGroup)));
+
+        verifyGroupListInUi();
     }
 
 
