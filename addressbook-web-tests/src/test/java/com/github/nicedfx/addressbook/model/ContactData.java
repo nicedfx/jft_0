@@ -7,7 +7,9 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.File;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @XStreamAlias("contact")
 @Entity
@@ -65,11 +67,12 @@ public class ContactData {
     @Transient
     private String emails;
     @Expose
-    @Transient
-    private String group;
     @Column(name = "photo")
     @Type(type = "text")
     private String photo;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name="address_in_groups", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns =  @JoinColumn(name = "group_id"))
+    private Set<GroupData> groups = new HashSet<>();
 
     public String getFirstName() {
         return firstName;
@@ -123,10 +126,6 @@ public class ContactData {
         return emails;
     }
 
-    public String getGroup() {
-        return group;
-    }
-
     public int getId() {
         return id;
     }
@@ -136,6 +135,10 @@ public class ContactData {
             return new File(photo);
         }
         return null;
+    }
+
+    public Groups getGroups() {
+        return new Groups(groups);
     }
 
     public ContactData withId(int id) {
@@ -188,11 +191,6 @@ public class ContactData {
         return this;
     }
 
-    public ContactData withGroup(String group) {
-        this.group = group;
-        return this;
-    }
-
     public ContactData withEmail2(String email2) {
         this.email2 = email2;
         return this;
@@ -217,6 +215,10 @@ public class ContactData {
         this.allPhones = phones;
         return this;
     }
+    public ContactData  inGroup(GroupData group) {
+        groups.add(group);
+        return this;
+    }
 
     @Override
     public String toString() {
@@ -233,11 +235,13 @@ public class ContactData {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ContactData that = (ContactData) o;
-        return id == that.id && Objects.equals(firstName, that.firstName) && Objects.equals(middleName, that.middleName) && Objects.equals(lastName, that.lastName) && Objects.equals(address, that.address) && Objects.equals(homePhone, that.homePhone) && Objects.equals(mobilePhone, that.mobilePhone) && Objects.equals(workPhone, that.workPhone) && Objects.equals(secondPhone, that.secondPhone) && Objects.equals(email, that.email) && Objects.equals(email2, that.email2) && Objects.equals(email3, that.email3) && Objects.equals(group, that.group);
+        return id == that.id && Objects.equals(firstName, that.firstName) && Objects.equals(middleName, that.middleName) && Objects.equals(lastName, that.lastName) && Objects.equals(address, that.address) && Objects.equals(homePhone, that.homePhone) && Objects.equals(mobilePhone, that.mobilePhone) && Objects.equals(workPhone, that.workPhone) && Objects.equals(secondPhone, that.secondPhone) && Objects.equals(email, that.email) && Objects.equals(email2, that.email2) && Objects.equals(email3, that.email3);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, middleName, lastName, address, homePhone, mobilePhone, workPhone, secondPhone, email, email2, email3, group);
+        return Objects.hash(id, firstName, middleName, lastName, address, homePhone, mobilePhone, workPhone, secondPhone, email, email2, email3);
     }
+
+
 }

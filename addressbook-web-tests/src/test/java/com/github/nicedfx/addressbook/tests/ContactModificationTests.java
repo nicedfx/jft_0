@@ -23,8 +23,7 @@ public class ContactModificationTests extends TestBase {
                     .withAddress("ThisIsAddress")
                     .withHomePhone("ThisIsHomePhone")
                     .withMobilePhone("ThisIsMobilePhone")
-                    .withEmail("thisIs@email.com")
-                    .withGroup("test1"));
+                    .withEmail("thisIs@email.com"));
             app.goTo().homePage();
         }
     }
@@ -47,8 +46,7 @@ public class ContactModificationTests extends TestBase {
                 .withAddress("Edited address")
                 .withHomePhone("Edited HomePhone")
                 .withMobilePhone("Edited mobilePhone")
-                .withEmail("Edited email")
-                .withGroup(null);
+                .withEmail("Edited email");
 
         app.contact().initContactModification(contactToModify.getId());
         app.contact().fillContactCreationForm(modifiedContact, false);

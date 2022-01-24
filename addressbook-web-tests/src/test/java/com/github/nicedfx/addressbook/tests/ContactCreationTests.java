@@ -2,8 +2,11 @@ package com.github.nicedfx.addressbook.tests;
 
 import com.github.nicedfx.addressbook.model.ContactData;
 import com.github.nicedfx.addressbook.model.Contacts;
+import com.github.nicedfx.addressbook.model.GroupData;
+import com.github.nicedfx.addressbook.model.Groups;
 import com.google.gson.Gson;
 import org.openqa.selenium.json.TypeToken;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -20,6 +23,17 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.testng.Assert.assertEquals;
 
 public class ContactCreationTests extends TestBase {
+
+    @BeforeMethod
+    public void ensureConditions() {
+        if (app.db().groups().size() == 0) {
+            app.goTo().groupPage();
+            app.group().create(new GroupData()
+                    .withName("test1")
+                    .withHeader("test2")
+                    .withFooter("test3"));
+        }
+    }
 
     @DataProvider
     public Iterator<Object[]> contactCreationDataProvider() throws IOException {
@@ -44,9 +58,12 @@ public class ContactCreationTests extends TestBase {
         logger.info("Start test testContactCreationTests");
         app.goTo().homePage();
 
-        Contacts before = app.db().contacts();
-        app.goTo().addNewContactPage();
         File photo = new File("src/test/resources/pic1.png");
+        Contacts before = app.db().contacts();
+        Groups groups = app.db().groups();
+        contactToCreate.inGroup(groups.iterator().next());
+
+        app.goTo().addNewContactPage();
 
         app.contact().create(contactToCreate);
         app.goTo().homePage();
@@ -75,8 +92,7 @@ public class ContactCreationTests extends TestBase {
                 .withAddress("ThisIsAddress")
                 .withHomePhone("ThisIsHomePhone")
                 .withMobilePhone("ThisIsMobilePhone")
-                .withEmail("thisIs@email.com")
-                .withGroup("Test_edit1");
+                .withEmail("thisIs@email.com");
 
         app.contact().create(contactToCreate);
         app.goTo().homePage();

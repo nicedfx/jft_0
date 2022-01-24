@@ -43,8 +43,7 @@ public class ContactInformationTests extends TestBase {
                     .withSecondPhone("8888     8888")
                     .withEmail("thisIs@email.co   m")
                     .withEmail2("thisIs@email.com    ")
-                    .withEmail3("   thisIs@email.com")
-                    .withGroup("test1"));
+                    .withEmail3("   thisIs@email.com"));
             app.goTo().homePage();
         }
     }
