@@ -2,6 +2,7 @@ package com.github.nicedfx.addressbook.appmanager;
 
 import com.github.nicedfx.addressbook.model.ContactData;
 import com.github.nicedfx.addressbook.model.Contacts;
+import com.github.nicedfx.addressbook.model.GroupData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -59,6 +60,10 @@ public class ContactsHelper extends HelperBase {
         click(By.xpath("//input[@value='Delete']"));
     }
 
+    public void clickRemoveFromGroupButton() {
+        click(By.cssSelector("input[name='remove']"));
+    }
+
     public boolean isThereAContact() {
         return isElementPresent(By.name("selected[]"));
     }
@@ -66,6 +71,18 @@ public class ContactsHelper extends HelperBase {
     public void create(ContactData contactData) {
         fillContactCreationForm(contactData, true);
         finishContactCreation();
+    }
+
+    public void addToGroup(GroupData group) {
+        wd.findElement(By.cssSelector("select[name='to_group']"))
+                .findElement(By.cssSelector("option[value='" + group.getId() + "']"))
+                .click();
+        wd.findElement(By.cssSelector("input[name='add']")).click();
+    }
+
+    public void selectGroup(GroupData group) {
+        wd.findElement(By.cssSelector("select[name='group']"))
+                .findElement(By.cssSelector("option[value='" + group.getId() +"']")).click();
     }
 
     public boolean isGroupPresentInTheList(String groupName) {

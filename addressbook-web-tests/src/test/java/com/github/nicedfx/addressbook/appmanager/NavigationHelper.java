@@ -1,5 +1,6 @@
 package com.github.nicedfx.addressbook.appmanager;
 
+import com.github.nicedfx.addressbook.model.GroupData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -32,4 +33,6 @@ public class NavigationHelper extends HelperBase {
     public void acceptAlertPopup() {
         wd.switchTo().alert().accept();
     }
+
+
 }
