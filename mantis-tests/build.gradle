@@ -1,0 +1,29 @@
+apply plugin: 'java'
+apply plugin: 'application'
+mainClassName = "com.github.nicedfx.sandbox.MyFirstProgram"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.testng:testng:7.1.0'
+    testImplementation group: 'org.testng', name: 'testng', version: '7.4.0'
+    implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.1.0'
+    testImplementation group: 'org.hamcrest', name: 'hamcrest', version: '2.2'
+}
+
+test {
+    useTestNG() {
+        suites 'src/test/resources/testng-groups.xml'
+    }
+    if (project.hasProperty('browser')) {
+        systemProperty 'browser', "${browser}"
+    }
+    if (project.hasProperty('target')) {
+        systemProperty 'target', "${target}"
+    }
+    if (project.hasProperty('verifyUi')) {
+        systemProperty 'verifyUi', "${verifyUi}"
+    }
+}
