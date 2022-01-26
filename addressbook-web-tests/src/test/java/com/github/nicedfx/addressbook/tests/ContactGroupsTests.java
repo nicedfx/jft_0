@@ -6,7 +6,10 @@ import com.github.nicedfx.addressbook.model.Groups;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -17,6 +20,7 @@ public class ContactGroupsTests extends TestBase {
     private ContactData contactToBeAdded;
     private ContactData contactToBeRemoved;
     private GroupData group;
+    private GroupData groupToRemove;
 
     @BeforeClass
     public void beforeClass() {
@@ -31,18 +35,21 @@ public class ContactGroupsTests extends TestBase {
         if (app.db().contacts().size() <= 1) {
             createContact();
         }
+
         contactToBeRemoved = app.db().contacts().without(contactToBeAdded).iterator().next();
 
-        if (contactToBeRemoved.getGroups().contains(group)) {
-            return;
+        if (contactToBeRemoved.getGroups().size() == 0) {
+            app.goTo().homePage();
+            app.contact().selectContact(contactToBeRemoved.getId());
+            app.contact().addToGroup(group);
+            app.goTo().homePage();
+            contactToBeRemoved = app.db().contacts().stream()
+                    .filter(c -> c.getId() == contactToBeRemoved.getId())
+                    .findFirst()
+                    .orElseThrow(() -> new RuntimeException("Failed to read contactToRemove from the DB"));
         }
-        app.contact().selectContact(contactToBeRemoved.getId());
-        app.contact().addToGroup(group);
-        app.goTo().homePage();
-        contactToBeRemoved = app.db().contacts().stream()
-                .filter(c -> c.getId() == contactToBeRemoved.getId())
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("Failed to read contactToRemove from the DB"));
+        groupToRemove = contactToBeRemoved.getGroups().iterator().next();
+
     }
 
 
@@ -68,7 +75,7 @@ public class ContactGroupsTests extends TestBase {
     @Test
     public void removeContactFromGroup() {
         app.goTo().homePage();
-        app.contact().selectGroup(group);
+        app.contact().selectGroup(groupToRemove);
 
         app.contact().selectContact(contactToBeRemoved.getId());
         app.contact().clickRemoveFromGroupButton();
@@ -78,9 +85,9 @@ public class ContactGroupsTests extends TestBase {
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Contact under test was not found in the DB"));
 
-        assertThat(contactToBeRemoved.getGroups(), hasItem(group));
+        assertThat(contactToBeRemoved.getGroups(), hasItem(groupToRemove));
 
-        assertThat(removedContact.getGroups(), not(hasItem(group)));
+        assertThat(removedContact.getGroups(), not(hasItem(groupToRemove)));
     }
 
     private GroupData getAvailableGroup(ContactData contact) {
@@ -108,7 +115,10 @@ public class ContactGroupsTests extends TestBase {
                 .withHeader("test2")
                 .withFooter("test3"));
         app.goTo().homePage();
-        return app.db().groups().iterator().next();
+        List<GroupData> groupsLIst = app.db().groups().stream()
+                .sorted(Comparator.comparingInt(GroupData::getId))
+                .collect(Collectors.toList());
+        return groupsLIst.get(groupsLIst.size()-1);
     }
 
     private void createContact() {
