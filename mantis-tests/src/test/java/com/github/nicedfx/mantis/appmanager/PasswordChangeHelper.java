@@ -2,24 +2,23 @@ package com.github.nicedfx.mantis.appmanager;
 
 import org.openqa.selenium.By;
 
-public class PasswordChangeHelper extends HelperBase{
+public class PasswordChangeHelper extends HelperBase {
 
 
     public PasswordChangeHelper(ApplicationManager app) {
         super(app);
     }
 
-    public void start(String username, String email) {
-        wd.get(app.getProperty("web.baseUrl") + "/signup_page.php");
-       type(By.name("username"), username);
-       type(By.name("email"), email);
-       click(By.cssSelector("input[value='Signup']"));
+    public void logIn(String username, String paswword) {
+        wd.get(app.getProperty("web.baseUrl") + "/login_page.php");
+        type(By.id("username"), username);
+        click(By.cssSelector("input[value='Login']"));
+        type(By.id("password"), paswword);
+        click(By.cssSelector("input[value='Login']"));
     }
 
-    public void finish(String confirmationLink, String password) {
-        wd.get(confirmationLink);
-        type(By.name("password"), password);
-        type(By.name("password_confirm"), password);
-        click(By.cssSelector("button[type='submit']"));
+    public void resetUserPassword(int userId) {
+        wd.get(app.getProperty("web.baseUrl") + "/manage_user_edit_page.php?user_id=" + userId);
+        click(By.cssSelector("input[value='Reset Password']"));
     }
 }

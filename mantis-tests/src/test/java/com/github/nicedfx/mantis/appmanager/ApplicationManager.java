@@ -15,7 +15,9 @@ public class ApplicationManager {
     private final String browser;
     private WebDriver wd;
     private RegistrationHelper registrationHelper;
+    private PasswordChangeHelper passwordChangeHelper;
     private MailHelper mailHelper;
+    private DbHelper dbHelper;
 
     public ApplicationManager(String browser) {
         this.browser = browser;
@@ -48,6 +50,13 @@ public class ApplicationManager {
         return registrationHelper;
     }
 
+    public PasswordChangeHelper userPasswordChange() {
+        if (passwordChangeHelper == null) {
+            passwordChangeHelper = new PasswordChangeHelper(this);
+        }
+        return passwordChangeHelper;
+    }
+
     public WebDriver getDriver() {
         if (wd == null) {
             if (browser.equalsIgnoreCase(Browser.FIREFOX.browserName())) {
@@ -68,5 +77,12 @@ public class ApplicationManager {
             mailHelper = new MailHelper(this);
         }
         return mailHelper;
+    }
+
+    public DbHelper db() {
+        if (dbHelper == null) {
+            dbHelper = new DbHelper(this);
+        }
+        return dbHelper;
     }
  }
