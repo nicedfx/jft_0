@@ -1,5 +1,6 @@
 package com.github.nicedfx.mantis.appmanager;
 
+import com.github.nicedfx.mantis.model.MailMessage;
 import org.subethamail.wiser.Wiser;
 import org.subethamail.wiser.WiserMessage;
 
@@ -7,6 +8,7 @@ import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.IOException;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class MailHelper {
