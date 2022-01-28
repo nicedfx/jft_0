@@ -1,12 +1,11 @@
 package com.github.nicedfx.mantis.appmanager;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 
-public class RegistrationHelper extends HelperBase{
+public class PasswordChangeHelper extends HelperBase{
 
 
-    public RegistrationHelper(ApplicationManager app) {
+    public PasswordChangeHelper(ApplicationManager app) {
         super(app);
     }
 

@@ -4,7 +4,6 @@ import com.github.nicedfx.mantis.model.MailMessage;
 import org.subethamail.wiser.Wiser;
 import org.subethamail.wiser.WiserMessage;
 
-import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.IOException;
@@ -40,7 +39,6 @@ public class MailHelper {
         try {
             MimeMessage mm = m.getMimeMessage();
             return new MailMessage(mm.getAllRecipients()[0].toString(), (String) mm.getContent());
-
         } catch (MessagingException e ) {
             e.printStackTrace();
             return null;
