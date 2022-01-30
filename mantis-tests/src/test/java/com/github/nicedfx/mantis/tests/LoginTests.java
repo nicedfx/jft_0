@@ -1,14 +1,13 @@
 package com.github.nicedfx.mantis.tests;
 
 import com.github.nicedfx.mantis.appmanager.HttpSession;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertTrue;
 
-public class LoginTests extends TestBase{
+public class LoginTests extends TestBase {
 
     @Test
     public void testLogin() throws IOException {

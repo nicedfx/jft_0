@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HttpSession {
-    private CloseableHttpClient httpClient;
-    private ApplicationManager app;
+    private final CloseableHttpClient httpClient;
+    private final ApplicationManager app;
 
     public HttpSession(ApplicationManager app) {
         this.app = app;
@@ -51,4 +51,4 @@ public class HttpSession {
         return body.contains(String.format("<a href=\"/mantisbt-2.25.2/account_page.php\">%s</a>", username));
 //        return body.contains(String.format("<span class=\"italic\">%s</span>", username));
     }
- }
+}

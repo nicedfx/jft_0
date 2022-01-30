@@ -40,7 +40,7 @@ public class RegistrationTests extends TestBase {
         String password = String.valueOf(now);
         UserData user = app.db().users().stream()
                 .filter(u -> !u.getUsername().equals("administrator"))
-                        .findAny().get();
+                .findAny().get();
 
         app.userPasswordChange().logIn("administrator", "root");
         app.userPasswordChange().resetUserPassword(user.getId());

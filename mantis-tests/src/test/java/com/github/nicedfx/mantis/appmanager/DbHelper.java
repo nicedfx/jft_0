@@ -13,7 +13,7 @@ import java.util.List;
 public class DbHelper {
 
     private final SessionFactory sessionFactory;
-    private ApplicationManager app;
+    private final ApplicationManager app;
 
     public DbHelper(ApplicationManager app) {
         this.app = app;
