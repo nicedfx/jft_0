@@ -31,6 +31,9 @@ task testContacts(type: Test) {
     if (project.hasProperty('verifyUi')) {
         systemProperty 'verifyUi', "${verifyUi}"
     }
+    if (project.hasProperty('platform')) {
+        systemProperty 'platform', "${platform}"
+    }
 }
 
 task testGroups(type: Test) {
@@ -46,6 +49,9 @@ task testGroups(type: Test) {
     if (project.hasProperty('verifyUi')) {
         systemProperty 'verifyUi', "${verifyUi}"
     }
+    if (project.hasProperty('platform')) {
+        systemProperty 'platform', "${platform}"
+    }
 }
 
 test {
@@ -59,5 +65,8 @@ test {
     }
     if (project.hasProperty('verifyUi')) {
         systemProperty 'verifyUi', "${verifyUi}"
+    }
+    if (project.hasProperty('platform')) {
+        systemProperty 'platform', "${platform}"
     }
 }
