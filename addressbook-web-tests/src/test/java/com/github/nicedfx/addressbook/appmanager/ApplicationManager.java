@@ -1,13 +1,17 @@
 package com.github.nicedfx.addressbook.appmanager;
 
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.Browser;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Properties;
 
 public class ApplicationManager {
@@ -31,13 +35,20 @@ public class ApplicationManager {
 
         dbHelper = new DbHelper();
 
-        if (browser.equalsIgnoreCase(Browser.FIREFOX.browserName())) {
-            wd = new FirefoxDriver();
-        } else if (browser.equalsIgnoreCase(Browser.CHROME.browserName())) {
-            wd = new ChromeDriver();
-        } else if (browser.equalsIgnoreCase(Browser.EDGE.browserName())) {
-            wd = new EdgeDriver();
+        if ("".equals(properties.getProperty("selenium.server"))) {
+            if (browser.equalsIgnoreCase(Browser.FIREFOX.browserName())) {
+                wd = new FirefoxDriver();
+            } else if (browser.equalsIgnoreCase(Browser.CHROME.browserName())) {
+                wd = new ChromeDriver();
+            } else if (browser.equalsIgnoreCase(Browser.EDGE.browserName())) {
+                wd = new EdgeDriver();
+            }
+        } else {
+            DesiredCapabilities  capabilities = new DesiredCapabilities();
+            capabilities.setBrowserName(browser);
+            wd = new RemoteWebDriver(new URL("selenium.server"), capabilities);
         }
+
 //        wd.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         wd.get(properties.getProperty("web.baseUrl"));
         groupHelper = new GroupHelper(wd);
